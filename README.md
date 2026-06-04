@@ -2,28 +2,30 @@
 
 # kiro-steering
 
-为 Kiro 提供长期记忆、规则与人设的 Steering 文档。
+## 什么是Steering
 
-Steering 可以理解为更适合 Kiro 的 `agent.md` 或 `claude.md`：把一个或多个 Markdown 规则文档放进指定目录后，Kiro 会在日常对话和开发任务中主动参考这些长期规则。
+简单地说，Steering是更适合Kiro体质的agent.md或claude.md。
 
-## 路径
+## Kiro Steering的路径、形式、优先级
 
-### 全局规则
+Kiro支持用一个或多个md文档来提供长期记忆、人设、规则，Kiro不在乎这些文档的名称，只要放在指定路径`.../.kiro/steering/`内，它就会主动遵守。
 
-- macOS：`~/.kiro/steering/`
-- Windows：`%USERPROFILE%\.kiro\steering\`
+### 常用路径
 
-### 项目规则
+【全局性】
 
-```text
-<你的项目根目录>/.kiro/steering/
-```
+- macOS默认：`/Users/mac/.kiro/steering`
+- Windows默认：`C:\Users\Administrator\.kiro\steering\`
 
-## 形式
+【项目级】
 
-在 `steering` 文件夹内放一个或多个 Markdown 文件即可，文件名没有硬性要求。常见组织方式：
+...\<你的某个项目文件夹根目录>\.kiro\steering\
 
-```text
+### 规则形式
+
+写一个或若干个md文档，放在`steering`文件夹内即可，命名无要求。示例：
+
+```Plain Text
 C:\Users\Administrator\.kiro\steering\
 ├── language.md
 ├── workflow.md
@@ -32,38 +34,33 @@ C:\Users\Administrator\.kiro\steering\
 └── git.md
 ```
 
-如果只想维护一个文档，可以命名为 `steering.md` 或 `agent.md`。
+如果你只想放一个文档，那么建议命名为steering.md或agen.md
 
-## 优先级
+### 遵守优先级
 
-项目级规则优先于全局规则。
+项目级＞全局性。冲突时，kiro优先遵守项目级的steering
 
-当项目目录下的 `.kiro/steering/` 与全局 `~/.kiro/steering/` 存在冲突时，Kiro 会优先遵守项目级 Steering。
+## 最佳实践
 
-## 示例：固定使用简体中文
+笔者发现，Kiro在高峰期总爱在聊天窗口显式注入英文或日语，完全不管我开会话时用的是中文和它沟通。即使你在该会话内要求他用中文答复，它聊几句之后还是会走神又开始说鸟语。
 
-可以新建一个 `language.md`：
+我选择用下面的脚本自动定位并打开kiro全局配置目录的`.kiro/steering`，然后我可以新建一个language.md用于要求kiro遵守：
 
-```markdown
-- 默认始终使用简体中文回答用户，术语、代码等可以保留英文。
-```
+> - 默认始终使用简体中文回答用户，术语、代码等可以保留英文。
 
-这个规则适合解决 Kiro 在会话中偶尔切换到英文或日语的问题。
+### 脚本
 
-## 附件脚本
+macOS：
 
-文档附件已整理到 `attachments/`：
+[open-kiro-steering.zsh](attachments/open-kiro-steering.zsh)
 
-- [macOS 脚本：open-kiro-steering.zsh](attachments/open-kiro-steering.zsh)
-- [Windows 脚本：open-kiro-steering.cmd](attachments/open-kiro-steering.cmd)
+Windows：
 
-功能：自动定位、创建并打开 Kiro 的全局 Steering 文件夹。
+[open-kiro-steering.cmd](attachments/open-kiro-steering.cmd)
 
-使用方式：
+功能：自动定位并打开kiro的全局性Steering文件夹
 
-- Windows：双击 `open-kiro-steering.cmd`
-- macOS：打开终端，输入 `zsh `，拖入 `open-kiro-steering.zsh`，回车
+用法：
 
-## 来源
-
-整理自飞书 Wiki 文档：<https://lxxtrhuie3n.feishu.cn/wiki/QFR4wwQCWiPyUgkBIAPcCjVKnxc>
+- WIN，双击打开。
+- macOS，打开终端，输入zsh+空格，拖入脚本，回车
